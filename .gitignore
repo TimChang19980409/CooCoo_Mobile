@@ -41,3 +41,11 @@ example
 # generated native folders
 /ios
 /android
+
+# editor, IDE support
+/.idea
+/.vscode
+
+# coding agent folder
+/.claude
+
