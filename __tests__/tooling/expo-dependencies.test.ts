@@ -1,6 +1,6 @@
 import fs from 'node:fs';
-import path from 'node:path';
 import { createRequire } from 'node:module';
+import path from 'node:path';
 
 type PackageManifest = {
   dependencies?: Record<string, string>;
@@ -8,7 +8,9 @@ type PackageManifest = {
 };
 
 const projectRoot = path.resolve(__dirname, '../..');
-const requireFromProject = createRequire(path.join(projectRoot, 'package.json'));
+const requireFromProject = createRequire(
+  path.join(projectRoot, 'package.json'),
+);
 
 const packageJson = JSON.parse(
   fs.readFileSync(path.join(projectRoot, 'package.json'), 'utf8'),
@@ -31,7 +33,9 @@ describe('Expo SDK dependencies', () => {
 
     expect(managedNames.length).toBeGreaterThan(0);
 
-    const actual = Object.fromEntries(managedNames.map((name) => [name, declared[name]]));
+    const actual = Object.fromEntries(
+      managedNames.map((name) => [name, declared[name]]),
+    );
     const expected = Object.fromEntries(
       managedNames.map((name) => [name, bundledNativeModules[name]]),
     );
