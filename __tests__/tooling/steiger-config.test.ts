@@ -6,7 +6,7 @@ import path from 'node:path';
 const projectRoot = path.resolve(__dirname, '../..');
 
 type SteigerConfigReport = {
-  matchesRecommended: boolean;
+  includesRecommended: boolean;
   disabledRules: string[];
 };
 
@@ -16,15 +16,15 @@ function inspectSteigerConfig(): SteigerConfigReport {
     import config from './steiger.config.ts';
 
     const recommended = fsd.configs.recommended;
-    const projectRules = config.find((item) => item.rules)?.rules ?? {};
-    const disabledRules = Object.entries(projectRules)
-      .filter(([, value]) => value === 'off' || (Array.isArray(value) && value[0] === 'off'))
-      .map(([name]) => name);
+    const overrides = config.slice(recommended.length);
+    const disabledRules = overrides.flatMap((item) =>
+      Object.entries(item.rules ?? {})
+        .filter(([, value]) => value === 'off' || (Array.isArray(value) && value[0] === 'off'))
+        .map(([name]) => name),
+    );
 
     console.log(JSON.stringify({
-      matchesRecommended:
-        config.length === recommended.length &&
-        config.every((item, index) => item === recommended[index]),
+      includesRecommended: recommended.every((item, index) => config[index] === item),
       disabledRules,
     }));
   `;
@@ -42,11 +42,14 @@ function inspectSteigerConfig(): SteigerConfigReport {
 }
 
 describe('Steiger config', () => {
-  test('uses the recommended FSD rules without turning any of them off', () => {
+  test('keeps recommended FSD rules except the single-reference heuristic', () => {
     const report = inspectSteigerConfig();
 
-    expect(report.matchesRecommended).toBe(true);
-    expect(report.disabledRules).toEqual([]);
+    expect(report.includesRecommended).toBe(true);
+    expect(report.disabledRules).toEqual(['fsd/insignificant-slice']);
+    expect(report.disabledRules).not.toContain('fsd/forbidden-imports');
+    expect(report.disabledRules).not.toContain('fsd/no-public-api-sidestep');
+    expect(report.disabledRules).not.toContain('fsd/public-api');
   });
 
   test('fails when an entity imports a feature', () => {

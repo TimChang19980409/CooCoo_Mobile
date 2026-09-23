@@ -1,7 +1,10 @@
+import { useQuery } from '@tanstack/react-query';
 import * as Device from 'expo-device';
 import { Platform, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { greetingQueryOptions } from '@/entities/greeting';
+import { NicknameForm } from '@/features/update-nickname';
 import { BottomTabInset, MaxContentWidth, Spacing } from '@/shared/config';
 import {
   AnimatedIcon,
@@ -31,6 +34,8 @@ function getDevMenuHint() {
 }
 
 export function HomePage() {
+  const greeting = useQuery(greetingQueryOptions);
+
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
@@ -40,6 +45,15 @@ export function HomePage() {
             Welcome to&nbsp;Expo
           </ThemedText>
         </ThemedView>
+
+        <ThemedText testID="greeting-status">
+          {greeting.isPending
+            ? 'Loading greeting'
+            : greeting.isError
+              ? 'Greeting unavailable'
+              : greeting.data.message}
+        </ThemedText>
+        <NicknameForm />
 
         <ThemedText type="code" style={styles.code}>
           get started
