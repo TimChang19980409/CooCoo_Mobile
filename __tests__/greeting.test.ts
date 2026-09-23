@@ -1,34 +1,25 @@
-import { fetchGreeting, getGreeting } from '@/entities/greeting';
+import { HttpResponse, http } from 'msw';
 
-function jsonResponse(status: number, body: unknown) {
-  return {
-    ok: status >= 200 && status < 300,
-    status,
-    json: async () => body,
-  } as Response;
-}
+import { fetchGreeting, getGreeting } from '@/entities/greeting';
+import { server } from '@/shared/api/mocks/node';
 
 describe('greeting API', () => {
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
-  test('returns the message from a successful response', async () => {
-    jest
-      .spyOn(global, 'fetch')
-      .mockResolvedValue(jsonResponse(200, { message: 'Hello' }));
-
+  test('returns the message from the MSW handler', async () => {
     const result = await getGreeting();
 
     expect(result.isOk()).toBe(true);
     if (result.isOk()) {
-      expect(result.value).toEqual({ message: 'Hello' });
+      expect(result.value).toEqual({ message: 'Hello from CooCoo' });
     }
-    await expect(fetchGreeting()).resolves.toEqual({ message: 'Hello' });
+    await expect(fetchGreeting()).resolves.toEqual({
+      message: 'Hello from CooCoo',
+    });
   });
 
   test('returns unauthorized when the response is HTTP 401', async () => {
-    jest.spyOn(global, 'fetch').mockResolvedValue(jsonResponse(401, {}));
+    server.use(
+      http.get('*/api/greeting', () => new HttpResponse(null, { status: 401 })),
+    );
 
     const result = await getGreeting();
 
@@ -40,9 +31,9 @@ describe('greeting API', () => {
   });
 
   test('returns invalid-response when the body fails Zod validation', async () => {
-    jest
-      .spyOn(global, 'fetch')
-      .mockResolvedValue(jsonResponse(200, { message: 12 }));
+    server.use(
+      http.get('*/api/greeting', () => HttpResponse.json({ message: 12 })),
+    );
 
     const result = await getGreeting();
 

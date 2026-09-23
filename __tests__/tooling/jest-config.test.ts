@@ -18,6 +18,8 @@ describe('Jest config', () => {
     ]);
     expect(jestConfig.moduleNameMapper).toEqual({
       '\\.css$': '<rootDir>/test-utils/style-mock.js',
+      '^msw$': '<rootDir>/test-utils/msw-core.ts',
+      '^msw/node$': '<rootDir>/test-utils/msw-node.ts',
     });
     expect(jestConfig.transformIgnorePatterns).toEqual([
       'node_modules/(?!(.pnpm|(jest-)?react-native|@react-native(-community)?|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg))',

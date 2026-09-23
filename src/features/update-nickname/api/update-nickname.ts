@@ -1,9 +1,9 @@
-import { parseResponse, requestJson } from '@/shared/api';
+import { nicknameEndpoint, parseResponse, requestJson } from '@/shared/api';
 
 import { nicknameResponseSchema } from '../model/nickname';
 
 export function updateNickname(nickname: string) {
-  return requestJson('/api/nickname', {
+  return requestJson(nicknameEndpoint, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ nickname }),

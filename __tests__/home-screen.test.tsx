@@ -21,18 +21,6 @@ jest.mock('@/shared/ui', () => {
 });
 
 describe('HomeScreen', () => {
-  beforeEach(() => {
-    jest.spyOn(global, 'fetch').mockResolvedValue({
-      ok: true,
-      status: 200,
-      json: async () => ({ message: 'Hello' }),
-    } as Response);
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
-
   test('renders the welcome title', async () => {
     const client = new QueryClient({
       defaultOptions: {
@@ -47,6 +35,6 @@ describe('HomeScreen', () => {
     );
 
     expect(screen.getByText(/Welcome to\sExpo/)).toBeTruthy();
-    expect(await screen.findByText('Hello')).toBeTruthy();
+    expect(await screen.findByText('Hello from CooCoo')).toBeTruthy();
   });
 });
