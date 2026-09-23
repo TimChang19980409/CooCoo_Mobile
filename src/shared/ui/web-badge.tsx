@@ -1,7 +1,7 @@
 import { version } from 'expo/package.json';
 import { Image } from 'expo-image';
 import { StyleSheet, useColorScheme } from 'react-native';
-import { Spacing } from '@/constants/theme';
+import { Spacing } from '@/shared/config';
 import { ThemedText } from './themed-text';
 import { ThemedView } from './themed-view';
 

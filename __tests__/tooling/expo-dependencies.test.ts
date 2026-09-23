@@ -42,4 +42,19 @@ describe('Expo SDK dependencies', () => {
 
     expect(actual).toEqual(expected);
   });
+
+  test('pins React peers to the app React version', () => {
+    const workspace = fs.readFileSync(
+      path.join(projectRoot, 'pnpm-workspace.yaml'),
+      'utf8',
+    );
+    const manifest = JSON.parse(
+      fs.readFileSync(path.join(projectRoot, 'package.json'), 'utf8'),
+    ) as PackageManifest;
+
+    expect(workspace).toContain(`react: ${manifest.dependencies?.react}`);
+    expect(workspace).toContain(
+      `react-dom: ${manifest.dependencies?.['react-dom']}`,
+    );
+  });
 });

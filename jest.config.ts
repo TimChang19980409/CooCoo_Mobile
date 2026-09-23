@@ -2,6 +2,7 @@ import type { Config } from 'jest';
 
 const config = {
   preset: 'jest-expo',
+  setupFilesAfterEnv: ['<rootDir>/test-utils/jest-setup.js'],
   moduleNameMapper: {
     '\\.css$': '<rootDir>/test-utils/style-mock.js',
   },

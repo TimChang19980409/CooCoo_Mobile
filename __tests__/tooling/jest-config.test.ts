@@ -13,6 +13,9 @@ const projectRoot = path.resolve(__dirname, '../..');
 describe('Jest config', () => {
   test('uses jest-expo and keeps the pnpm transform exception', () => {
     expect(jestConfig.preset).toBe('jest-expo');
+    expect(jestConfig.setupFilesAfterEnv).toEqual([
+      '<rootDir>/test-utils/jest-setup.js',
+    ]);
     expect(jestConfig.moduleNameMapper).toEqual({
       '\\.css$': '<rootDir>/test-utils/style-mock.js',
     });
