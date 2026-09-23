@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "coocoo_mobile",
-    "slug": "coocoo_mobile",
+    "slug": "coocoomobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -37,6 +37,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "9b21d0ca-667a-4853-80c2-2d4ee47d5781"
+      }
+    },
+    "owner": "kevin19980409s-team"
   }
 }
