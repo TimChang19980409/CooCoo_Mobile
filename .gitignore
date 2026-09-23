@@ -49,3 +49,6 @@ example
 # coding agent folder
 /.claude
 
+
+*storybook.log
+storybook-static

@@ -4,9 +4,18 @@
   "version": "1.0.0",
   "dependencies": {
     "@expo/ui": "~57.0.19",
+    "@gorhom/bottom-sheet": "latest",
     "@hookform/resolvers": "^5.9.1",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-native-community/datetimepicker": "9.1.0",
+    "@react-native-community/slider": "5.2.0",
+    "@storybook/addon-ondevice-actions": "latest",
+    "@storybook/addon-ondevice-controls": "latest",
+    "@storybook/react-native": "latest",
+    "@storybook/react-native-ui-lite": "latest",
     "@tanstack/react-query": "^5.103.2",
     "babel-plugin-react-compiler": "^1.0.0",
+    "cross-env": "latest",
     "expo": "~57.0.24",
     "expo-constants": "~57.0.19",
     "expo-device": "~57.0.2",
@@ -31,9 +40,11 @@
     "react-native-reanimated": "4.5.1",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "~4.26.0",
+    "react-native-svg": "15.15.4",
     "react-native-url-polyfill": "^4.0.0",
     "react-native-web": "~0.21.0",
     "react-native-worklets": "0.10.1",
+    "storybook": "^10.6.0",
     "zod": "^4.6.5"
   },
   "devDependencies": {
@@ -67,7 +78,10 @@
     "test:watch": "jest --watchAll",
     "format": "biome check --write .",
     "format:check": "biome check .",
-    "fsd:check": "steiger ./src"
+    "fsd:check": "steiger ./src",
+    "storybook": "cross-env STORYBOOK_ENABLED=true expo start",
+    "storybook:ios": "cross-env STORYBOOK_ENABLED=true expo start --ios",
+    "storybook:android": "cross-env STORYBOOK_ENABLED=true expo start --android"
   },
   "private": true
 }
