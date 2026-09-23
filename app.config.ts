@@ -10,8 +10,10 @@ const config = {
   userInterfaceStyle: 'automatic',
   ios: {
     icon: './assets/expo.icon',
+    bundleIdentifier: 'com.coocoomobile.app',
   },
   android: {
+    package: 'com.coocoomobile.app',
     adaptiveIcon: {
       backgroundColor: '#E6F4FE',
       foregroundImage: './assets/images/android-icon-foreground.png',

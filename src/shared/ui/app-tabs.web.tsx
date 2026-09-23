@@ -37,7 +37,14 @@ export function TabButton({
   ...props
 }: TabTriggerSlotProps) {
   return (
-    <Pressable {...props} style={({ pressed }) => pressed && styles.pressed}>
+    <Pressable
+      {...props}
+      testID={
+        props.testID ??
+        (typeof children === 'string' ? `tab-${children}` : undefined)
+      }
+      style={({ pressed }) => pressed && styles.pressed}
+    >
       <ThemedView
         type={isFocused ? 'backgroundSelected' : 'backgroundElement'}
         style={styles.tabButtonView}
@@ -67,7 +74,7 @@ export function CustomTabList(props: TabListProps) {
         {props.children}
 
         <ExternalLink href="https://docs.expo.dev" asChild>
-          <Pressable style={styles.externalPressable}>
+          <Pressable testID="docs-link" style={styles.externalPressable}>
             <ThemedText type="link">Docs</ThemedText>
             <SymbolView
               tintColor={colors.text}

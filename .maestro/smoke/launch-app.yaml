@@ -1,0 +1,4 @@
+appId: com.coocoomobile.app
+---
+- launchApp
+- assertVisible: Welcome.*Expo

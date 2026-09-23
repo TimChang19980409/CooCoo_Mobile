@@ -19,6 +19,7 @@ export function Collapsible({
   return (
     <ThemedView>
       <Pressable
+        testID={`collapsible-${title}`}
         style={({ pressed }) => [
           styles.heading,
           pressed && styles.pressedHeading,
